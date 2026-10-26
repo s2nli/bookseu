@@ -2,15 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="CX Books">
   <title>RaysBook.live - Explore</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="images/icon-192.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="preconnect" href="https://books.streamfiles.eu.org" crossorigin>
   <link rel="stylesheet" href="css/codexstudys-popup.css">
   <style>
-    html,body{margin:0;padding:0;height:100%;width:100%;overflow:hidden;background:#fff}
-    #site-frame{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#fff}
-    @supports (height:100dvh){#site-frame{height:100dvh}}
+    /* Iframe fills the whole visible area. No viewport-fit=cover and no fixed 100vh,
+       so nothing is pushed under the notch / status bar / mobile address bar (the cause of cropping). */
+    html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#fff}
+    #site-frame{position:fixed;top:0;right:0;bottom:0;left:0;width:100%;height:100%;border:0;display:block;background:#fff}
   </style>
 </head>
 <body>
@@ -18,31 +25,51 @@
     id="site-frame"
     src="https://books.streamfiles.eu.org/"
     title="Books"
-    loading="eager"
     allow="fullscreen; clipboard-write"
     allowfullscreen
     referrerpolicy="strict-origin-when-cross-origin"></iframe>
 
+  <!-- Popup 1: community -->
   <div class="cx-overlay" id="cx-popup" role="dialog" aria-modal="true" aria-labelledby="cx-title" aria-describedby="cx-sub" aria-hidden="true">
     <div class="cx-card">
-      <div class="cx-badge" aria-hidden="true">CX</div>
+      <img class="cx-logo" src="images/icon-192.png" alt="Codexstudys">
       <h2 class="cx-title" id="cx-title">Join Codexstudys Community</h2>
       <p class="cx-sub" id="cx-sub">Get study updates and important announcements.</p>
       <div class="cx-actions">
-        <a class="cx-btn cx-tg" href="https://t.me/codexstudys" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.5 4.3 2.9 11.5c-1.3.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15.1c.3-1.3-.5-1.9-1.5-1.5ZM9 14.2l9.2-5.8c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2L9 14.2Z"/></svg>
-          Join on Telegram
+        <a class="cx-btn cx-tg" data-first href="https://t.me/codexstudys" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m21.6 4.7-2.8 13.4c-.2.95-.77 1.18-1.56.74l-4.3-3.17-2.07 1.99c-.23.23-.42.42-.86.42l.31-4.39 7.99-7.22c.35-.31-.08-.48-.54-.17L8 12.55 3.79 11.2c-.92-.29-.94-.92.2-1.36L20.46 3.4c.78-.29 1.46.17 1.14 1.3Z"/></svg>
+          Join Telegram
         </a>
         <a class="cx-btn cx-wa" href="https://whatsapp.com/channel/0029VbDI2CGEAKWNSoya5L2w" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5Z"/><path d="M9 8.8c.2 2.8 2.600 5.200 5.500 5.700l1.200-1.300-1.800-.9-.8.700c-1-.4-1.900-1.300-2.300-2.300l.7-.8-.9-1.800L9 8.800Z" fill="currentColor" stroke="none"/></svg>
-          Join on WhatsApp
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5Z"/><path d="M9 8.8c.2 2.8 2.6 5.2 5.5 5.7l1.2-1.3-1.8-.9-.8.7c-1-.4-1.9-1.3-2.3-2.3l.7-.8-.9-1.8L9 8.8Z" fill="currentColor" stroke="none"/></svg>
+          Join WhatsApp
         </a>
-        <button type="button" class="cx-btn cx-later">Maybe Later</button>
+        <button type="button" class="cx-btn cx-later" data-cx-close>Maybe Later</button>
       </div>
+      <button type="button" class="cx-snooze" data-cx-snooze>Don't show again for 24 hrs</button>
     </div>
   </div>
 
-  <noscript><p style="position:fixed;inset:0;margin:0;padding:24px;background:#fff;font-family:sans-serif">JavaScript is not required for the embedded site, but your browser may need it. <a href="https://books.streamfiles.eu.org/">Open the books site directly</a>.</p></noscript>
+  <!-- Popup 2: install web app (shown right after popup 1 is closed, only if installable) -->
+  <div class="cx-overlay" id="cx-install" role="dialog" aria-modal="true" aria-labelledby="cx-install-title" aria-hidden="true">
+    <div class="cx-card">
+      <img class="cx-logo" src="images/icon-192.png" alt="Codexstudys Books">
+      <h2 class="cx-title" id="cx-install-title">Install Codexstudys Books 📲</h2>
+      <p class="cx-sub" id="cx-install-body">Add the app to your home screen for a faster, app-like experience.</p>
+      <div class="cx-actions">
+        <button type="button" class="cx-btn cx-install" id="cx-install-btn" data-first>Install App</button>
+      </div>
+      <ol class="cx-ios" id="cx-ios-steps">
+        <li>Tap the <strong>Share</strong> icon <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg> in Safari's toolbar</li>
+        <li>Scroll down and tap <strong>Add to Home Screen</strong></li>
+        <li>Tap <strong>Add</strong> to confirm</li>
+      </ol>
+      <div class="cx-actions"><button type="button" class="cx-btn cx-later" data-cx-close>Maybe Later</button></div>
+      <button type="button" class="cx-snooze" data-cx-snooze>Don't show again for 24 hrs</button>
+    </div>
+  </div>
+
+  <noscript><p style="position:fixed;inset:0;margin:0;padding:24px;background:#fff;font-family:sans-serif">Please enable JavaScript, or <a href="https://books.streamfiles.eu.org/">open the books site directly</a>.</p></noscript>
   <script src="js/codexstudys-popup.js"></script>
 </body>
 </html>

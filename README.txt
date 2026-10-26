@@ -20,8 +20,9 @@ WHY php/ may be empty:
 POWERED BY OLD-HACKER
 
 ---- UPDATE NOTES ----
-index.html                  -> now a full-screen iframe shell loading https://books.streamfiles.eu.org/ + Codexstudys popup
-css/codexstudys-popup.css   -> NEW popup styles (black/green)
-js/codexstudys-popup.js     -> NEW popup logic (once per browser session via sessionStorage)
-vercel.json                 -> NEW minimal headers for deployment
-html/index.html             -> UNCHANGED original page copy (kept as backup of the previous index.html)
+index.html                  -> full-screen iframe shell loading https://books.streamfiles.eu.org/ + 2 popups (community, install app)
+css/codexstudys-popup.css   -> popup styles (black/green)
+js/codexstudys-popup.js     -> popup flow (once per session, optional 24h snooze) + PWA install + service worker registration
+manifest.json, service-worker.js, images/icon-192.png, images/icon-512.png, images/apple-touch-icon.png (new PW BOOKS logo) -> make the page an installable web app
+vercel.json                 -> minimal headers
+html/index.html             -> UNCHANGED original page copy (backup of the previous index.html)
