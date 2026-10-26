@@ -1,41 +1,93 @@
 (function () {
-  var KEY = 'codexstudys_popup_seen';
-  var overlay = document.getElementById('cx-popup');
-  if (!overlay) return;
-  var seen = false;
-  try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
-  if (seen) return;
+  var SEEN = 'codexstudys_popups_seen';          // once per browser session
+  var SNOOZE = 'codexstudys_popups_snooze';      // optional 24h snooze
+  var SNOOZE_MS = 24 * 60 * 60 * 1000;
+  var community = document.getElementById('cx-popup');
+  var install = document.getElementById('cx-install');
+  var deferredPrompt = null;
 
-  var lastFocus = null;
-  function close() {
-    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
-    overlay.classList.remove('cx-show');
-    setTimeout(function () {
-      overlay.classList.remove('cx-open');
-      overlay.setAttribute('aria-hidden', 'true');
-      if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
-    }, 250);
-    document.removeEventListener('keydown', onKey);
+  function standalone() {
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
   }
-  function onKey(e) { if (e.key === 'Escape') close(); }
+  function isIOS() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+  function snoozed() { try { return Number(localStorage.getItem(SNOOZE) || 0) > Date.now(); } catch (e) { return false; } }
+  function markSeen() { try { sessionStorage.setItem(SEEN, '1'); } catch (e) {} }
 
-  function open() {
-    lastFocus = document.activeElement;
-    overlay.classList.add('cx-open');
-    overlay.setAttribute('aria-hidden', 'false');
-    requestAnimationFrame(function () { overlay.classList.add('cx-show'); });
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferredPrompt = e; });
+  window.addEventListener('appinstalled', function () { closeModal(install); });
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('service-worker.js').catch(function () {}); });
+  }
+
+  var openEl = null, lastFocus = null, onClosed = null;
+  function onKey(e) { if (e.key === 'Escape' && openEl) closeModal(openEl); }
+  function openModal(el, cb) {
+    if (!el) return;
+    lastFocus = document.activeElement; onClosed = cb || null; openEl = el;
+    el.classList.add('cx-open'); el.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(function () { el.classList.add('cx-show'); });
     document.addEventListener('keydown', onKey);
-    var later = overlay.querySelector('.cx-later');
-    if (later) later.focus({ preventScroll: true });
+    var f = el.querySelector('[data-first]'); if (f) f.focus({ preventScroll: true });
+  }
+  function closeModal(el) {
+    if (!el || !el.classList.contains('cx-open')) return;
+    el.classList.remove('cx-show');
+    document.removeEventListener('keydown', onKey);
+    setTimeout(function () {
+      el.classList.remove('cx-open'); el.setAttribute('aria-hidden', 'true');
+      if (openEl === el) openEl = null;
+      var cb = onClosed; onClosed = null;
+      if (cb) cb(); else if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
+    }, 250);
   }
 
-  overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
-  var later = overlay.querySelector('.cx-later');
-  if (later) later.addEventListener('click', close);
-  // Joining also counts as seen so it won't reappear this session
-  Array.prototype.forEach.call(overlay.querySelectorAll('a.cx-btn'), function (a) {
-    a.addEventListener('click', function () { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} });
+  function showInstall() {
+    if (!install || standalone() || snoozed()) return;
+    var btn = document.getElementById('cx-install-btn');
+    var steps = document.getElementById('cx-ios-steps');
+    var body = document.getElementById('cx-install-body');
+    if (isIOS()) {
+      if (btn) btn.style.display = 'none';
+      if (steps) steps.style.display = 'block';
+      if (body) body.textContent = 'Add Codexstudys Books to your home screen for a faster, app-like experience.';
+    } else if (!deferredPrompt) {
+      return; // browser can't install right now (already installed / unsupported) - skip silently
+    }
+    openModal(install);
+  }
+
+  if (install) {
+    var btn = document.getElementById('cx-install-btn');
+    if (btn) btn.addEventListener('click', function () {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function () { deferredPrompt = null; closeModal(install); });
+    });
+    install.addEventListener('click', function (e) { if (e.target === install) closeModal(install); });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-cx-close]'), function (b) {
+    b.addEventListener('click', function () { closeModal(b.closest('.cx-overlay')); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-cx-snooze]'), function (b) {
+    b.addEventListener('click', function () {
+      try { localStorage.setItem(SNOOZE, String(Date.now() + SNOOZE_MS)); } catch (e) {}
+      closeModal(community); closeModal(install);
+    });
   });
 
-  setTimeout(open, 1200);
+  if (!community || snoozed()) return;
+  var seen = false; try { seen = sessionStorage.getItem(SEEN) === '1'; } catch (e) {}
+  if (seen) return;
+
+  community.addEventListener('click', function (e) { if (e.target === community) closeModal(community); });
+  Array.prototype.forEach.call(community.querySelectorAll('a.cx-btn'), function (a) { a.addEventListener('click', markSeen); });
+
+  setTimeout(function () {
+    markSeen();
+    openModal(community, function () { setTimeout(showInstall, 200); });
+  }, 1200);
 })();
