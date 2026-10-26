@@ -12,6 +12,9 @@
   <link rel="icon" type="image/png" href="images/icon-192.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="preconnect" href="https://books.streamfiles.eu.org" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600&display=swap">
   <link rel="stylesheet" href="css/codexstudys-popup.css">
   <style>
     /* Iframe fills the whole visible area. No viewport-fit=cover and no fixed 100vh,
@@ -32,19 +35,19 @@
   <!-- Popup 1: community -->
   <div class="cx-overlay" id="cx-popup" role="dialog" aria-modal="true" aria-labelledby="cx-title" aria-describedby="cx-sub" aria-hidden="true">
     <div class="cx-card">
+      <button type="button" class="cx-close" data-cx-close aria-label="Close popup">×</button>
       <img class="cx-logo" src="images/icon-192.png" alt="Codexstudys">
-      <h2 class="cx-title" id="cx-title">Join Codexstudys Community</h2>
-      <p class="cx-sub" id="cx-sub">Get study updates and important announcements.</p>
+      <h2 class="cx-title" id="cx-title">Join Our Community 🚀</h2>
+      <p class="cx-sub" id="cx-sub">Stay updated with the latest materials, notes, PDFs and important updates.</p>
       <div class="cx-actions">
-        <a class="cx-btn cx-tg" data-first href="https://t.me/codexstudys" target="_blank" rel="noopener noreferrer">
+        <a class="cx-btn cx-tg" href="https://t.me/codexstudys" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m21.6 4.7-2.8 13.4c-.2.95-.77 1.18-1.56.74l-4.3-3.17-2.07 1.99c-.23.23-.42.42-.86.42l.31-4.39 7.99-7.22c.35-.31-.08-.48-.54-.17L8 12.55 3.79 11.2c-.92-.29-.94-.92.2-1.36L20.46 3.4c.78-.29 1.46.17 1.14 1.3Z"/></svg>
           Join Telegram
         </a>
         <a class="cx-btn cx-wa" href="https://whatsapp.com/channel/0029VbDI2CGEAKWNSoya5L2w" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5Z"/><path d="M9 8.8c.2 2.8 2.6 5.2 5.5 5.7l1.2-1.3-1.8-.9-.8.7c-1-.4-1.9-1.3-2.3-2.3l.7-.8-.9-1.8L9 8.8Z" fill="currentColor" stroke="none"/></svg>
-          Join WhatsApp
+          Join WhatsApp Channel
         </a>
-        <button type="button" class="cx-btn cx-later" data-cx-close>Maybe Later</button>
       </div>
       <button type="button" class="cx-snooze" data-cx-snooze>Don't show again for 24 hrs</button>
     </div>
@@ -53,9 +56,10 @@
   <!-- Popup 2: install web app (shown right after popup 1 is closed, only if installable) -->
   <div class="cx-overlay" id="cx-install" role="dialog" aria-modal="true" aria-labelledby="cx-install-title" aria-hidden="true">
     <div class="cx-card">
+      <button type="button" class="cx-close" data-cx-close aria-label="Close install prompt">×</button>
       <img class="cx-logo" src="images/icon-192.png" alt="Codexstudys Books">
       <h2 class="cx-title" id="cx-install-title">Install Codexstudys Books 📲</h2>
-      <p class="cx-sub" id="cx-install-body">Add the app to your home screen for a faster, app-like experience.</p>
+      <p class="cx-sub" id="cx-install-body">Add the app to your home screen for a faster, app-like experience — works offline too.</p>
       <div class="cx-actions">
         <button type="button" class="cx-btn cx-install" id="cx-install-btn" data-first>Install App</button>
       </div>
@@ -64,7 +68,6 @@
         <li>Scroll down and tap <strong>Add to Home Screen</strong></li>
         <li>Tap <strong>Add</strong> to confirm</li>
       </ol>
-      <div class="cx-actions"><button type="button" class="cx-btn cx-later" data-cx-close>Maybe Later</button></div>
       <button type="button" class="cx-snooze" data-cx-snooze>Don't show again for 24 hrs</button>
     </div>
   </div>

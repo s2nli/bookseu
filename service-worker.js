@@ -1,6 +1,6 @@
 /* Minimal app-shell service worker (makes the app installable).
    Only same-origin shell files are cached; the embedded site is never intercepted. */
-const CACHE = 'cx-books-shell-v2';
+const CACHE = 'cx-books-shell-v3';
 const SHELL = ['./', './index.html', './css/codexstudys-popup.css', './js/codexstudys-popup.js', './manifest.json', './images/icon-192.png', './images/icon-512.png', './images/apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {
