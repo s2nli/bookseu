@@ -1,22 +1,28 @@
-/* Codexstudys community popup - black & green theme */
+/* Codexstudys popups (community + install) - black & green theme */
 .cx-overlay{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s ease}
 .cx-overlay.cx-open{display:flex}
 .cx-overlay.cx-show{opacity:1}
-.cx-card{position:relative;width:100%;max-width:400px;padding:32px 24px 22px;border-radius:22px;background:linear-gradient(160deg,#0b0f0c 0%,#050706 100%);border:1px solid rgba(34,214,106,.35);box-shadow:0 0 0 1px rgba(34,214,106,.08),0 24px 60px rgba(0,0,0,.65),0 0 60px rgba(34,214,106,.14);color:#f2fff7;text-align:center;font-family:'Outfit','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;transform:translateY(14px) scale(.97);transition:transform .28s cubic-bezier(.2,.9,.3,1.2)}
+.cx-card{position:relative;width:100%;max-width:400px;max-height:100%;overflow-y:auto;padding:32px 24px 18px;border-radius:22px;background:linear-gradient(160deg,#0b0f0c 0%,#050706 100%);border:1px solid rgba(34,214,106,.35);box-shadow:0 0 0 1px rgba(34,214,106,.08),0 24px 60px rgba(0,0,0,.65),0 0 60px rgba(34,214,106,.14);color:#f2fff7;text-align:center;font-family:'Outfit','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;transform:translateY(14px) scale(.97);transition:transform .28s cubic-bezier(.2,.9,.3,1.2)}
 .cx-show .cx-card{transform:none}
-.cx-badge{width:56px;height:56px;margin:0 auto 16px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(34,214,106,.12);border:1px solid rgba(34,214,106,.45);color:#22d66a;font-weight:800;font-size:22px;letter-spacing:-1px;box-shadow:0 0 24px rgba(34,214,106,.25)}
+.cx-logo{width:60px;height:60px;margin:0 auto 14px;border-radius:16px;display:block;object-fit:cover;background:#fff;padding:3px;border:1px solid rgba(34,214,106,.5);box-shadow:0 0 24px rgba(34,214,106,.28)}
 .cx-title{margin:0 0 8px;font-size:22px;line-height:1.25;font-weight:800;color:#fff}
-.cx-sub{margin:0 0 22px;font-size:14.5px;line-height:1.5;color:#9db3a6}
+.cx-sub{margin:0 0 20px;font-size:14.5px;line-height:1.5;color:#9db3a6}
 .cx-actions{display:flex;flex-direction:column;gap:10px}
 .cx-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:48px;padding:12px 16px;border-radius:14px;font:inherit;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .15s ease,box-shadow .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent}
 .cx-btn svg{width:20px;height:20px;flex:none}
 .cx-btn:active{transform:scale(.98)}
-.cx-tg{background:#22d66a;color:#04120a;box-shadow:0 6px 20px rgba(34,214,106,.28)}
-.cx-tg:hover{background:#34e57a;box-shadow:0 8px 26px rgba(34,214,106,.4)}
+.cx-tg,.cx-install{background:#22d66a;color:#04120a;box-shadow:0 6px 20px rgba(34,214,106,.28)}
+.cx-tg:hover,.cx-install:hover{background:#34e57a;box-shadow:0 8px 26px rgba(34,214,106,.4)}
 .cx-wa{background:transparent;color:#22d66a;border-color:rgba(34,214,106,.6)}
 .cx-wa:hover{background:rgba(34,214,106,.1)}
-.cx-later{margin-top:6px;background:transparent;border:0;color:#7f948a;font-size:14px;font-weight:600;padding:10px;min-height:44px}
+.cx-later{margin-top:4px;background:transparent;border:0;color:#7f948a;font-size:14px;font-weight:600;padding:10px;min-height:44px}
 .cx-later:hover{color:#cfe8d9}
-.cx-btn:focus-visible,.cx-later:focus-visible{outline:2px solid #22d66a;outline-offset:2px}
-@media (max-height:520px){.cx-card{padding:18px 18px 12px}.cx-badge{display:none}.cx-sub{margin-bottom:14px}}
+.cx-snooze{display:block;margin:0 auto;background:transparent;border:0;color:#5f746a;font:inherit;font-size:12.5px;padding:8px;cursor:pointer;min-height:36px}
+.cx-snooze:hover{color:#9db3a6}
+.cx-ios{display:none;margin:0 0 6px;padding:0 0 0 20px;text-align:left;color:#b8cfc2;font-size:13.5px;line-height:1.55;gap:8px}
+.cx-ios li{padding-left:4px;margin-bottom:6px}
+.cx-ios strong{color:#fff}
+.cx-ios svg{width:15px;height:15px;vertical-align:-3px;margin:0 1px}
+.cx-btn:focus-visible,.cx-later:focus-visible,.cx-snooze:focus-visible{outline:2px solid #22d66a;outline-offset:2px}
+@media (max-height:520px){.cx-card{padding:18px 18px 10px}.cx-logo{display:none}.cx-sub{margin-bottom:12px}}
 @media (prefers-reduced-motion:reduce){.cx-overlay,.cx-card{transition:none}}
